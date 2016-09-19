@@ -51,7 +51,6 @@
   with_items:
     - git
     - htop
-    - ipref
     - lshw
     - ngrep
     - pv
