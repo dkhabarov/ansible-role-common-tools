@@ -64,9 +64,9 @@
     - common_tools_install_additional_packages
   when: common_tools_install_additional_packages
 
-- name: install additional packages
+- name: install zsh packages
   apt: 
-    name: "{{ item }}"
+    name: zsh
     state: present
   when: common_tools_install_zsh
   tags:
