@@ -1,0 +1,106 @@
+---
+- name: install sources.list
+  template:
+    src: "etc/apt/sources.list.{{ ansible_distribution | lower }}.j2"
+    dest: /etc/apt/sources.list
+    owner: root
+    group: root
+    mode: 0644
+  tags: common_tools_install_sources_list
+
+- name: apt-get update
+  apt: 
+    update_cache: yes
+
+- name: install base packages
+  apt:
+    pkg: "{{ item }}"
+  with_items:
+    - software-properties-common
+    - curl
+    - dbus
+    - vim
+    - tmux
+    - python2.7-psycopg2
+    - git
+    - unzip
+    - unrar
+    - aptitude
+    - wget
+    - python-dev
+    - python-pip
+    - python-setuptools
+    - hdparm
+    - iftop
+    - iotop
+    - netcat
+    - openssl
+    - smartmontools
+    - sysstat
+    - telnet
+    - vim
+    - sudo
+    - iptables
+  tags: 
+    - common_tools_install_base_packages
+
+- name: install additional packages
+  apt: 
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - git
+    - htop
+    - ipref
+    - lshw
+    - ngrep
+    - pv
+    - tcpdump
+    - whois
+    - ethtool
+    - strace
+    - rsync
+    - mc
+  tags:
+    - common_tools_install_additional_packages
+  when: common_tools_install_additional_packages
+
+- name: install additional packages
+  apt: 
+    name: "{{ item }}"
+    state: present
+  when: common_tools_install_zsh
+  tags:
+    - common_tools_install_zsh   
+
+- name: Ensure the system can use the HTTPS transport for APT
+  stat:
+     path: /usr/lib/apt/methods/https
+  register: apt_https_transport
+  tags:
+    - common_tools_install_apt_https_transport
+
+- name: Install HTTPS transport for APT
+  apt:
+    pkg: apt-transport-https
+  when: not apt_https_transport.stat.exists
+  tags:
+    - common_tools_install_apt_https_transport
+
+- name: Assures /etc/sudoers.d/ dir exists
+  file: 
+    path: /etc/sudoers.d/
+    state: directory
+    owner: root 
+    group: root 
+    mode: 0755
+  tags: 
+    - common_tools_configure_ssh_agent
+
+- name: make sure ssh-agent works via sudo
+  template:
+    src: etc/sudoers.d/ssh-agent.conf.j2
+    dest: /etc/sudoers.d/sudo-ssh-agent.conf
+    owner: root
+    group: root
+    mode: 0644

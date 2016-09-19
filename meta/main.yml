@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Denis Khabarov
+  description: Ansible role for common system utilities we use on everyday basis.
+  license: GPLv3
+  min_ansible_version: 1.4
+  platforms:
+  - name: Ubuntu
+    versions:
+     - trusty
+  categories:
+  - development
+  - system
+dependencies: []
