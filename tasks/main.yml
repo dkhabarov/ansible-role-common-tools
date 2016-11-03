@@ -115,3 +115,13 @@
     mode: 0644
   tags:
     - common_tools_install_tmux_conf
+
+- name: install skel bashrc
+  template:
+    src: etc/skel/.bashrc
+    dest: /etc/skel/.bashrc
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - common_tools_install_bashrc
