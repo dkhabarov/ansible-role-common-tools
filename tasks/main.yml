@@ -105,3 +105,13 @@
     mode: 0644
   tags:
     - common_tools_configure_ssh_agent
+
+- name: install tmux.conf
+  template:
+    src: etc/tmux.conf.j2
+    dest: /etc/tmux.conf
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - common_tools_install_tmux_conf
