@@ -39,6 +39,7 @@
     - sysstat
     - telnet
     - vim
+    - nano
     - sudo
     - iptables
   tags:
