@@ -18,8 +18,6 @@
   with_items:
     - software-properties-common
     - curl
-    - dbus
-    - vim
     - tmux
     - python2.7-psycopg2
     - git
@@ -50,7 +48,8 @@
     name: "{{ item }}"
     state: present
   with_items:
-    - git
+    - dbus
+    - mlocate
     - htop
     - lshw
     - ngrep
