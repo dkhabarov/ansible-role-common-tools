@@ -8,6 +8,9 @@ galaxy_info:
   - name: Ubuntu
     versions:
      - trusty
+  - name: CentOS
+    versions:
+      - 7
   categories:
   - development
   - system

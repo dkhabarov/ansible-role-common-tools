@@ -1,5 +1,5 @@
 ---
-- name: install sources.list
+- name: Debian | install sources.list
   template:
     src: "etc/apt/sources.list.{{ ansible_distribution | lower }}.j2"
     dest: /etc/apt/sources.list
@@ -8,12 +8,12 @@
     mode: 0644
   tags: common_tools_install_sources_list
 
-- name: apt-get update
+- name: Debian | apt-get update
   apt:
     update_cache: yes
     cache_valid_time: 3600
 
-- name: install base packages
+- name: Debian | Install base packages
   apt:
     pkg: "{{ item }}"
   with_items:
@@ -44,7 +44,7 @@
   tags:
     - common_tools_install_base_packages
 
-- name: install additional packages
+- name: Debian | Install additional packages
   apt:
     name: "{{ item }}"
     state: present
@@ -61,11 +61,12 @@
     - strace
     - rsync
     - mc
+    - tree
   tags:
     - common_tools_install_additional_packages
   when: common_tools_install_additional_packages
 
-- name: install zsh packages
+- name: Debian | Install zsh packages
   apt:
     name: zsh
     state: present
@@ -73,14 +74,14 @@
   tags:
     - common_tools_install_zsh
 
-- name: Ensure the system can use the HTTPS transport for APT
+- name: Debian | Ensure the system can use the HTTPS transport for APT
   stat:
      path: /usr/lib/apt/methods/https
   register: apt_https_transport
   tags:
     - common_tools_install_apt_https_transport
 
-- name: Install HTTPS transport for APT
+- name: Debian | Install HTTPS transport for APT
   apt:
     pkg: apt-transport-https
   when: not apt_https_transport.stat.exists

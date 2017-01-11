@@ -1,0 +1,68 @@
+---
+
+- name: RedHat | Add repository
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+    gpgcheck: no
+
+- name: RedHat | Install basic packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - curl
+    - tmux
+    - python-devel
+    - python2-pip
+    - python-setuptools
+    - python-psycopg2
+    - libselinux-python
+    - git
+    - unzip
+    - p7zip
+    - wget
+    - hdparm
+    - iftop
+    - iotop
+    - nmap-ncat
+    - openssl
+    - smartmontools
+    - sysstat
+    - telnet
+    - vim-minimal
+    - nano
+    - sudo
+    - net-tools
+  tags:
+    - common_tools_install_base_packages
+
+- name: RedHat | install additional packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - mlocate
+    - htop
+    - lshw
+    - ngrep
+    - pv
+    - tcpdump
+    - whois
+    - ethtool
+    - strace
+    - rsync
+    - mc
+    - tree
+  tags:
+    - common_tools_install_additional_packages
+  when: common_tools_install_additional_packages
+
+- name: RedHat | install zsh packages
+  yum:
+    name: zsh
+    state: present
+  when: common_tools_install_zsh
+  tags:
+    - common_tools_install_zsh
