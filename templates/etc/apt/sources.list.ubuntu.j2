@@ -13,8 +13,6 @@ deb http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-securit
 deb http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-security multiverse
 deb http://archive.canonical.com/ubuntu {{ ansible_distribution_release }} partner
 
-
-deb-src http://extras.ubuntu.com/ubuntu {{ ansible_distribution_release }} main
 deb-src http://archive.canonical.com/ubuntu {{ ansible_distribution_release }} partner
 deb-src http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-security multiverse
 deb-src http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-security universe
@@ -26,3 +24,7 @@ deb-src http://archive.ubuntu.com/ubuntu/ {{ ansible_distribution_release }} mul
 deb-src http://archive.ubuntu.com/ubuntu/ {{ ansible_distribution_release }} universe
 deb-src http://archive.ubuntu.com/ubuntu/ {{ ansible_distribution_release }}-updates main restricted
 deb-src http://archive.ubuntu.com/ubuntu/ {{ ansible_distribution_release }} main restricted
+
+{%if role_common_enable_ubuntu_extras_repo is defined and role_common_enable_ubuntu_extras_repo %}
+deb-src http://extras.ubuntu.com/ubuntu {{ ansible_distribution_release }} main
+{%endif%}

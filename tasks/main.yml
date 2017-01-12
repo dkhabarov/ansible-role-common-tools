@@ -6,6 +6,9 @@
 - include: RedHat.yml
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat Enterprise Linux'
 
+- include: Fedora.yml
+  when: ansible_pkg_mgr == 'dnf'
+
 - name: Assures /etc/sudoers.d/ dir exists
   file:
     path: /etc/sudoers.d/

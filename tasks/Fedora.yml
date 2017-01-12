@@ -1,0 +1,69 @@
+---
+
+- name: Fedora | Install basic packages
+  dnf:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - curl
+    - tmux
+    - python-devel
+    - python-pip
+    - python2-setuptools
+    - python-psycopg2
+    - git
+    - unzip
+    - p7zip
+    - wget
+    - hdparm
+    - iftop
+    - iotop
+    - openssl
+    - smartmontools
+    - sysstat
+    - telnet
+    - vim-minimal
+    - nano
+    - sudo
+    - net-tools
+
+- name: install netcat
+  dnf:
+    name: nmap-ncat
+  when:
+    - ansible_distribution_version | version_compare('25', '>=')
+
+- name: install netcat
+  dnf:
+    name: nc6
+  when:
+    - ansible_distribution_version | version_compare('25', '<')
+
+- name: Fedora | install additional packages
+  dnf:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - mlocate
+    - htop
+    - lshw
+    - ngrep
+    - pv
+    - tcpdump
+    - whois
+    - ethtool
+    - strace
+    - rsync
+    - mc
+    - tree
+  tags:
+    - common_tools_install_additional_packages
+  when: common_tools_install_additional_packages
+
+- name: Fedora | install zsh packages
+  dnf:
+    name: zsh
+    state: present
+  when: common_tools_install_zsh
+  tags:
+    - common_tools_install_zsh

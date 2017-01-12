@@ -1,3 +1,4 @@
 ---
 common_tools_install_zsh: no
 common_tools_install_additional_packages: yes
+role_common_enable_ubuntu_extras_repo: no

@@ -13,14 +13,37 @@
     update_cache: yes
     cache_valid_time: 3600
 
+- name: Ubuntu | Install software-properties-common
+  apt:
+    pkg: software-properties-common
+  when: ansible_distribution == "Ubuntu"
+  tags:
+    - common_tools_install_base_packages
+
+- name: Ubuntu >= 16.04 | Install psycopg
+  apt:
+    pkg: python-psycopg2
+  when: 
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_version | version_compare('16.04', '>=')
+  tags:
+    - common_tools_install_base_packages
+
+- name: Ubuntu == 14.04 | Install psycopg
+  apt:
+    pkg: python2.7-psycopg2
+  when: 
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_version | version_compare('14.04', '==')
+  tags:
+    - common_tools_install_base_packages
+
 - name: Debian | Install base packages
   apt:
     pkg: "{{ item }}"
   with_items:
-    - software-properties-common
     - curl
     - tmux
-    - python2.7-psycopg2
     - git
     - unzip
     - unrar
