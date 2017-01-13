@@ -9,6 +9,9 @@
 - include: Fedora.yml
   when: ansible_pkg_mgr == 'dnf'
 
+- include: Gentoo.yml
+  when: ansible_os_family == "Gentoo"
+
 - name: Assures /etc/sudoers.d/ dir exists
   file:
     path: /etc/sudoers.d/

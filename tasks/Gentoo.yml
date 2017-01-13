@@ -1,0 +1,68 @@
+---
+- name: Gentoo | Test for gentoolkit
+  shell: which equery &> /dev/null
+  changed_when: False
+  register: gentoolkit_test
+  failed_when: False
+
+- name: Gentoo | Install gentoolkit
+  shell: which equery &> /dev/null || emerge app-portage/gentoolkit
+  when: gentoolkit_test.rc > 0
+
+- name: Gentoo | install base packages
+  portage:
+    package: "{{ item }}"
+    state: present
+  with_items:
+    - net-misc/curl
+    - app-misc/tmux
+    - dev-python/pip
+    - dev-python/setuptools
+    - dev-python/psycopg
+    - dev-vcs/git
+    - app-arch/unzip
+    - app-arch/p7zip
+    - net-misc/wget
+    - sys-apps/hdparm
+    - net-analyzer/iftop
+    - sys-process/iotop
+    - dev-libs/openssl
+    - app-admin/sysstat
+    - net-misc/telnet-bsd
+    - app-editors/vim
+    - sys-apps/net-tools
+    - app-editors/nano
+    - app-admin/sudo
+    - net-analyzer/netcat
+  tags:
+    - common_tools_install_base_packages
+
+- name: Gentoo | install additional packages
+  portage:
+    package: "{{ item }}"
+    state: present
+  with_items:
+    - sys-apps/mlocate
+    - sys-process/htop
+    - sys-apps/lshw
+    - net-analyzer/ngrep
+    - sys-apps/pv
+    - net-analyzer/tcpdump
+    - net-misc/whois
+    - sys-apps/ethtool
+    - dev-util/strace
+    - net-misc/rsync
+    - app-misc/mc
+    - app-text/tree
+    - sys-fs/ncdu
+  tags:
+    - common_tools_install_additional_packages
+  when: common_tools_install_additional_packages
+
+- name: Gentoo | install zsh packages
+  portage:
+    package: zsh
+    state: present
+  when: common_tools_install_zsh
+  tags:
+    - common_tools_install_zsh
