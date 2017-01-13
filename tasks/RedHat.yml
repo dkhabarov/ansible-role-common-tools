@@ -1,16 +1,16 @@
 ---
 
-- name: RedHat | Add repository
-  yum_repository:
-    name: epel
-    description: EPEL YUM repo
-    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
-    gpgcheck: no
+- name: RedHat | Add EPEL repository
+  yum:
+    name: epel-release
+    state: present
+    update_cache: yes
 
 - name: RedHat | Install basic packages
   yum:
     name: "{{ item }}"
     state: present
+    update_cache: yes
   with_items:
     - curl
     - tmux
@@ -42,6 +42,7 @@
   yum:
     name: "{{ item }}"
     state: present
+    update_cache: yes
   with_items:
     - mlocate
     - htop
@@ -55,6 +56,7 @@
     - rsync
     - mc
     - tree
+    - ncdu
   tags:
     - common_tools_install_additional_packages
   when: common_tools_install_additional_packages
@@ -63,6 +65,7 @@
   yum:
     name: zsh
     state: present
+    update_cache: yes
   when: common_tools_install_zsh
   tags:
     - common_tools_install_zsh

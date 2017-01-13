@@ -85,6 +85,7 @@
     - rsync
     - mc
     - tree
+    - ncdu
   tags:
     - common_tools_install_additional_packages
   when: common_tools_install_additional_packages
