@@ -25,7 +25,7 @@
 - name: make sure ssh-agent works via sudo
   template:
     src: etc/sudoers.d/ssh-agent.conf.j2
-    dest: /etc/sudoers.d/sudo-ssh-agent.conf
+    dest: /etc/sudoers.d/sudo-ssh-agent
     owner: root
     group: root
     mode: 0644
